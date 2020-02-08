@@ -603,6 +603,7 @@ export class GitGraphView implements vscode.Disposable {
 				<div id="content">
 					<div id="commitGraph"></div>
 					<div id="commitTable"></div>
+					<div id="commitDiff">Diff</div>
 				</div>
 				<div id="footer"></div>
 			</div>

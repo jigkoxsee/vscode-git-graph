@@ -1946,13 +1946,19 @@ class GitGraphView {
 		let commitOrder = this.getCommitOrder(expandedCommit.commitHash, expandedCommit.compareWithHash === null ? expandedCommit.commitHash : expandedCommit.compareWithHash);
 		let codeReviewPossible = !expandedCommit.loading && commitOrder.to !== UNCOMMITTED;
 
+		isDocked = false;
+		let isSidebar = true;
 		if (elem === null) {
-			elem = document.createElement(isDocked ? 'div' : 'tr');
+			elem = document.createElement(isDocked||isSidebar ? 'div' : 'tr');
 			elem.id = 'cdv';
-			elem.className = isDocked ? 'docked' : 'inline';
+			elem.className = isDocked ? 'docked' : isSidebar?'sidebar':'inline';
 			this.setCdvHeight(elem, isDocked);
 			if (isDocked) {
 				document.body.appendChild(elem);
+			} else if (isSidebar) {
+				let commitDiff = document.getElementById('commitDiff');
+				elem.className='sidebar';
+				commitDiff?.appendChild(elem);
 			} else {
 				insertAfter(elem, expandedCommit.commitElem);
 			}
@@ -1999,12 +2005,12 @@ class GitGraphView {
 			(!expandedCommit.loading ? '<div id="cdvFileViewTypeTree" class="cdvControlBtn cdvFileViewTypeBtn" title="File Tree View">' + SVG_ICONS.fileTree + '</div><div id="cdvFileViewTypeList" class="cdvControlBtn cdvFileViewTypeBtn" title="File List View">' + SVG_ICONS.fileList + '</div>' : '') +
 			'</div><div class="cdvHeightResize"></div>';
 
-		elem.innerHTML = isDocked ? html : '<td><div class="cdvHeightResize"></div></td><td colspan="' + (this.getNumColumns() - 1) + '">' + html + '</td>';
+		elem.innerHTML = isDocked||isSidebar ? html : '<td><div class="cdvHeightResize"></div></td><td colspan="' + (this.getNumColumns() - 1) + '">' + html + '</td>';
 		if (!expandedCommit.loading) this.setCdvDivider();
-		if (!isDocked) this.renderGraph();
+		if (!isDocked||!isSidebar) this.renderGraph();
 
 		if (!refresh) {
-			if (isDocked) {
+			if (isDocked||isSidebar) {
 				let elemTop = this.controlsElem.clientHeight + expandedCommit.commitElem.offsetTop;
 				if (elemTop - 8 < this.viewElem.scrollTop) {
 					// Commit is above what is visible on screen

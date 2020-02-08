@@ -33,6 +33,7 @@ body #view{
 
 #content{
 	position:relative;
+	display:flex;
 }
 
 
@@ -175,9 +176,14 @@ body #view{
 
 
 /* Commit Table */
+#commitDiff{
+	flex: 1;
+	position: relative;
+}
 
 #commitTable{
 	z-index:1;
+	flex: 1;
 }
 #commitTable table{
 	width:100%;
@@ -297,6 +303,18 @@ body #view{
 	left:0;
 	right:0;
 	bottom:0;
+	background-color:rgba(128,128,128,0.1);
+	font-size:13px;
+	line-height:18px;
+	white-space:normal;
+	cursor:default;
+}
+#cdv.sidebar{
+	display:block;
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
 	background-color:rgba(128,128,128,0.1);
 	font-size:13px;
 	line-height:18px;
@@ -496,15 +514,15 @@ body #view{
 	border-bottom:2px solid rgba(128,128,128,0.2);
 }
 
-#cdv.docked #cdvContent, #cdv.docked #cdvControls{
+#cdv.docked #cdvContent, #cdv.docked #cdvControls, #cdv.sidebar #cdvContent, #cdv.sidebar #cdvControls{
 	top:2px;
 	bottom:0;
 }
-#cdv.docked #cdvDivider{
+#cdv.docked #cdvDivider, #cdv.sidebar #cdvDivider{
 	top:6px;
 	bottom:0;
 }
-#cdv.docked .cdvHeightResize{
+#cdv.docked .cdvHeightResize, #cdv.sidebar .cdvHeightResize{
 	top:0;
 	border-top:2px solid rgba(128,128,128,0.2);
 }
